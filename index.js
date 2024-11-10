@@ -1,15 +1,21 @@
 const express = require('express');
 const {connectWithRetry} = require('./database');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpecs = require('./swaggerConfig');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use('/static', express.static('node_modules'));
 
+// Swagger UI route
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+
 // Connect to the database before starting the server
 connectWithRetry(() => {
     app.listen(port, () => {
         console.log(`Server running on http://localhost:${port}`);
+        console.log(`Swagger UI available at http://localhost:${port}/api-docs`);
     });
 });
 
@@ -37,6 +43,28 @@ app.get('/', (req, res) => {
     `);
 });
 
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Retrieve a list of users
+ *     responses:
+ *       200:
+ *         description: A list of users.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   name:
+ *                     type: string
+ *                   email:
+ *                     type: string
+ */
 app.get('/users', async (req, res) => {
     try {
         const client = require('./database').client;
