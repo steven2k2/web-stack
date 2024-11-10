@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  app:
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    command: |
+      sh -c '
+      max_retries=20
+      count=0
+      until pg_isready -h localhost -p 5432 || [ $count -eq $max_retries ]; do
+        echo "Waiting for PostgreSQL... ($count/$max_retries)"
+        count=$((count+1))
+        sleep 2
+      done
+      if [ $count -eq $max_retries ]; then
+        echo "PostgreSQL did not become ready in time." >&2
+        exit 1
+      fi
+      node index.js'
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"  # Maps the container's 5432 port to the host
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  pg_data:

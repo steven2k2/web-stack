@@ -1,0 +1,19 @@
+{
+  "name": "web_stack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "pg": "^8.x.x"
+  },
+  "keywords": [],
+  "author": "Steven Thompson",
+  "license": "ISC",
+  "description": "Basic web stack."
+}
