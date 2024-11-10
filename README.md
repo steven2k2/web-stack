@@ -44,6 +44,7 @@ my-express-app/
 - Bootstrap styling included for quick UI setup
 - Dockerized environment for streamlined deployment and local development
 - Example route (`/users`) displaying user data in a Bootstrap-styled table
+- Integrated Swagger
 
 ## Getting Started
 
@@ -106,3 +107,9 @@ npm run dev
    ```bash
    docker-compose up -d
    ```
+
+## Additions
+
+11/11/2024 Added Swagger to stack
+
+![Screenshot](public/images/swagger.jpg)
