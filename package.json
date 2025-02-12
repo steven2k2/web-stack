@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "standard",
+    "lint:fix": "standard --fix"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
@@ -17,5 +18,8 @@
   "keywords": [],
   "author": "Steven Thompson",
   "license": "ISC",
-  "description": "Basic web stack."
+  "description": "A minimal web stack using Express, PostgreSQL, and StandardJS.",
+  "devDependencies": {
+    "standard": "^17.1.2"
+  }
 }
