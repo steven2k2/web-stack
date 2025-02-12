@@ -1,26 +1,26 @@
-const express = require('express');
-const {connectWithRetry} = require('./database');
-const swaggerUi = require('swagger-ui-express');
-const swaggerSpecs = require('./swaggerConfig');
+const express = require('express')
+const { connectWithRetry } = require('./database')
+const swaggerUi = require('swagger-ui-express')
+const swaggerSpecs = require('./swaggerConfig')
 
-const app = express();
-const port = process.env.PORT || 3000;
+const app = express()
+const port = process.env.PORT || 3000
 
-app.use('/static', express.static('node_modules'));
+app.use('/static', express.static('node_modules'))
 
 // Swagger UI route
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs))
 
 // Connect to the database before starting the server
 connectWithRetry(() => {
-    app.listen(port, () => {
-        console.log(`Server running on http://localhost:${port}`);
-        console.log(`Swagger UI available at http://localhost:${port}/api-docs`);
-    });
-});
+  app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`)
+    console.log(`Swagger UI available at http://localhost:${port}/api-docs`)
+  })
+})
 
 app.get('/', (req, res) => {
-    res.send(`
+  res.send(`
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -40,8 +40,8 @@ app.get('/', (req, res) => {
             <script src="/static/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         </body>
         </html>
-    `);
-});
+    `)
+})
 
 /**
  * @swagger
@@ -66,10 +66,10 @@ app.get('/', (req, res) => {
  *                     type: string
  */
 app.get('/users', async (req, res) => {
-    try {
-        const client = require('./database').client;
-        const result = await client.query('SELECT * FROM users');
-        res.send(`
+  try {
+    const client = require('./database').client
+    const result = await client.query('SELECT * FROM users')
+    res.send(`
             <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -112,11 +112,11 @@ app.get('/users', async (req, res) => {
                 <script src="/static/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
             </body>
             </html>
-        `);
-    } catch (error) {
-        console.error('Error fetching users:', error.message);
-        res.status(500).send('An error occurred while fetching users.');
-    }
-});
+        `)
+  } catch (error) {
+    console.error('Error fetching users:', error.message)
+    res.status(500).send('An error occurred while fetching users.')
+  }
+})
 
-module.exports = app;
+module.exports = app
