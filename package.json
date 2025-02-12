@@ -17,7 +17,7 @@
   },
   "keywords": [],
   "author": "Steven Thompson",
-  "license": "ISC",
+  "license": "MIT",
   "description": "A minimal web stack using Express, PostgreSQL, and StandardJS.",
   "devDependencies": {
     "standard": "^17.1.2"
