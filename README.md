@@ -113,3 +113,9 @@ npm run dev
 11/11/2024 Added Swagger to stack
 
 ![Screenshot](public/images/swagger.jpg)
+
+---
+
+This project follows [Standard JS](https://standardjs.com/).
+
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
